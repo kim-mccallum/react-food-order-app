@@ -5,7 +5,7 @@ import classes from './Cart.module.css'
 
 //render this in a modal overlay using a portal
 const Cart = props => {
-    const cartItems = <ul className={classes['cart-items']}>{[{id:'c1', name:'Sushi',price:12.99}].map(item => <li>{item.name}</li>)}</ul>;
+    const cartItems = <ul className={classes['cart-items']}>{[{id:'c1', name:'Sushi',price:12.99}].map(item => <li key="c1">{item.name}</li>)}</ul>;
     return (
         <Modal onCloseCart={props.onCloseCart}>
             {cartItems}
