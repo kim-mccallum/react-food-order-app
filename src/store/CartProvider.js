@@ -9,7 +9,23 @@ const defaultCartState = {
 //outside the function so it doesn't recreate - receives state/action, returns a new snapshot
 const cartReducer = (state, action) => {
     if(action.type === 'ADD'){
-        const updatedItems = state.items.concat(action.item); //add an item to a NEW array (don't use push). IMMUTABLE OBJECTS
+        // const updatedItems = state.items.concat(action.item); //add an item to a NEW array (don't use push). IMMUTABLE OBJECTS
+
+        const existingCartItemIndex = state.items.findIndex(item => item.id === action.item.id);
+        const existingCartItem = state.items[existingCartItemIndex];
+        let updatedItems;
+
+        if (existingCartItem){
+            const updatedItem = {
+                ...existingCartItem, 
+                amount: existingCartItem.amount + action.item.amount
+            };
+            updatedItems = [...state.items];
+            updatedItems[existingCartItemIndex] = updatedItem;
+        } else {
+            updatedItems = state.items.concat(action.item)
+        }
+
         const updatedTotalAmount = state.totalAmount + action.item.price * action.item.amount;
         return {
             items: updatedItems,
